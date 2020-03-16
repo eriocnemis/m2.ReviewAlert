@@ -1,0 +1,42 @@
+<!--
+/**
+ * Copyright © Eriocnemis, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<!--@subject {{trans "%store_name:  New customer review" store_name=$store.getFrontendName()}} @-->
+<!--@vars {
+"var store.getFrontendName()":"Store Name",
+"var product.getName()":"Product Name",
+"var product.getSku()":"Product SKU",
+"var product.getHref()":"Product Url",
+"var product.getSrc()":"Product Image Url",
+"var review.getTitle()":"Review Title",
+"var review.getDetail()":"Review Detail",
+"var review.getNickname()":"Review Nickname",
+"layout handle=\"eriocnemis_review_alert_vote_list\" votes=$votes":"Votes List"
+} @-->
+
+{{template config_path="design/email/header_template"}}
+
+<h1>{{trans "New review for %name (%sku)" name=$product.getName() sku=$product.getSku()|escape|nl2br}}</h1>
+
+<table class="message-details">
+    <tr>
+        <td style="width: 40%;">
+            <a style="text-decoration:none" href="{{var product.getHref()|escape}}" target="_blank">
+                <img src="{{var product.getSrc()}}" alt="{{var product.getName()|escape|nl2br}}" width="100%">
+            </a>
+        </td>
+        <td style="vertical-align: middle;">
+            {{layout handle="eriocnemis_review_alert_vote_list" votes=$votes area="frontend"}}
+        </td>
+    </tr>
+</table>
+
+<p>{{trans "Customer %name has left a new review: %title" name=$review.getNickname() title=$review.getTitle()|escape|nl2br}}</p>
+{{depend review.getDetail()}}
+    <p>{{var review.getDetail()|escape|nl2br}}</p>
+{{/depend}}
+
+{{template config_path="design/email/footer_template"}}

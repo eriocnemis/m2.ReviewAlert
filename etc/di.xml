@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Eriocnemis, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- plugin -->
+    <type name="Magento\Review\Model\Review">
+        <plugin name="eriocnemis_review_alert" type="Eriocnemis\ReviewAlert\Plugin\Review\Model\ReviewPlugin"/>
+    </type>
+    <preference for="Eriocnemis\ReviewAlert\Model\Email\Container\IdentityInterface" type="Eriocnemis\ReviewAlert\Model\Email\Container\Identity"/>
+</config>

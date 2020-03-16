@@ -1,0 +1,31 @@
+<?php
+/**
+ * Copyright © Eriocnemis, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php $items = $block->getVotes() ?>
+<table class="email-items">
+    <tbody>
+    <?php foreach ($items as $item): ?>
+        <tr>
+            <td style="padding: 0 0 0 20px; border-top: none;">
+                <?= $block->escapeHtml($item->getRatingCode()) ?>
+            </td>
+            <td style="padding: 0; border-top: none;">
+                <?php $max = 5 ?>
+                <?php $value = $item->getValue() ?>
+                <div class="rating">
+                    <?php for ($i = 1; $i <= $max; $i++): ?>
+                        <?php if ($value >= $i): ?>
+                            <span class="star-fill">&#9733;</span>
+                        <?php else: ?>
+                            <span class="star-empty">&#9734;</span>
+                        <?php endif ?>
+                    <?php endfor ?>
+                </div>
+            </td>
+        </tr>
+    <?php endforeach ?>
+    </tbody>
+</table>
