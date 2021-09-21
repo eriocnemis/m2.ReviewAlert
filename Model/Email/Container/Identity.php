@@ -89,7 +89,7 @@ class Identity implements IdentityInterface
     /**
      * Retrieve email copy to list
      *
-     * @return array|bool
+     * @return string[]|bool
      */
     public function getEmailCopyTo()
     {

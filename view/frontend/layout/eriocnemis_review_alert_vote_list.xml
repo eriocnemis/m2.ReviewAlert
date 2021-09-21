@@ -12,4 +12,4 @@
     <body>
         <block class="Magento\Framework\View\Element\Template" name="additional.vote.info" template="Eriocnemis_ReviewAlert::votes.phtml"/>
     </body>
-</page> 
+</page>

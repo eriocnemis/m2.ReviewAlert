@@ -35,8 +35,8 @@ class ReviewPlugin
      * Aggregate reviews
      *
      * @param Review $review
-     * @param array $result
-     * @return array
+     * @param mixed $result
+     * @return mixed
      */
     public function afterAggregate(Review $review, $result)
     {

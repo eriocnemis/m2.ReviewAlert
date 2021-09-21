@@ -16,7 +16,7 @@ class Receiver implements ArrayInterface
     /**
      * Options array
      *
-     * @var array
+     * @var mixed[]
      */
     protected $options;
 
@@ -41,7 +41,7 @@ class Receiver implements ArrayInterface
     /**
      * Retrieve options as array
      *
-     * @return array
+     * @return mixed[]
      */
     public function getOptions()
     {
@@ -58,7 +58,7 @@ class Receiver implements ArrayInterface
     /**
      * Retrieve options as array
      *
-     * @return array
+     * @return mixed[]
      */
     public function toOptionArray()
     {
@@ -72,7 +72,7 @@ class Receiver implements ArrayInterface
     /**
      * Retrieve options in key-value format
      *
-     * @return array
+     * @return mixed[]
      */
     public function toArray()
     {

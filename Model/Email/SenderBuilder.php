@@ -65,8 +65,8 @@ class SenderBuilder
         );
 
         $copyTo = $this->identity->getEmailCopyTo();
-        if (false !== $copyTo && $this->identity->getCopyMethod() == 'bcc') {
-            foreach ((array)$copyTo as $email) {
+        if (is_array($copyTo) && $this->identity->getCopyMethod() == 'bcc') {
+            foreach ($copyTo as $email) {
                 $this->transportBuilder->addBcc($email);
             }
         }
@@ -84,9 +84,9 @@ class SenderBuilder
     {
         $copyTo = $this->identity->getEmailCopyTo();
 
-        if (false !== $copyTo && $this->identity->getCopyMethod() == 'copy') {
+        if (is_array($copyTo) && $this->identity->getCopyMethod() == 'copy') {
             $this->configureEmailTemplate();
-            foreach ((array)$copyTo as $email) {
+            foreach ($copyTo as $email) {
                 $this->transportBuilder->addTo($email);
                 $transport = $this->transportBuilder->getTransport();
                 $transport->sendMessage();

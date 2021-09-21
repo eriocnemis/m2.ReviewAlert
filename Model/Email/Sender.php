@@ -7,7 +7,6 @@ namespace Eriocnemis\ReviewAlert\Model\Email;
 
 use Psr\Log\LoggerInterface;
 use Magento\Framework\Registry;
-use Magento\Framework\App\Area;
 use Magento\Catalog\Helper\Image as ImageHelper;
 use Magento\Review\Model\Review;
 use Magento\Review\Model\ResourceModel\Rating\Option\Vote\CollectionFactory;
@@ -24,49 +23,49 @@ class Sender
      *
      * @var Registry
      */
-    protected $coreRegistry;
+    private $coreRegistry;
 
     /**
      * Vote collection factory
      *
      * @var CollectionFactory
      */
-    protected $collectionFactory;
+    private $collectionFactory;
 
     /**
      * Email sender builder factory
      *
      * @var SenderBuilderFactory
      */
-    protected $senderBuilderFactory;
+    private $senderBuilderFactory;
 
     /**
      * Catalog product image helper
      *
      * @var ImageHelper
      */
-    protected $imageHelper;
+    private $imageHelper;
 
     /**
      * Template container
      *
      * @var Template
      */
-    protected $template;
+    private $template;
 
     /**
      * Identity container
      *
      * @var IdentityInterface
      */
-    protected $identity;
+    private $identity;
 
     /**
      * Logger
      *
      * @var LoggerInterface
      */
-    protected $logger;
+    private $logger;
 
     /**
      * Initialize sender
@@ -110,9 +109,12 @@ class Sender
         }
 
         $this->prepareTemplate($review);
-
-        /** @var SenderBuilder $sender */
-        $sender = $this->getSender();
+        $sender = $this->senderBuilderFactory->create(
+            [
+                'template' => $this->template,
+                'identity' => $this->identity
+            ]
+        );
 
         try {
             $sender->send();
@@ -136,7 +138,7 @@ class Sender
      * @param Review $review
      * @return void
      */
-    protected function prepareTemplate(Review $review)
+    private function prepareTemplate(Review $review)
     {
         $this->template->setTemplateId($this->identity->getTemplateId());
         $this->template->setTemplateOptions($this->getTemplateOptions());
@@ -144,29 +146,14 @@ class Sender
     }
 
     /**
-     * Create Sender object using appropriate template and identity
-     *
-     * @return \Eriocnemis\ReviewAlert\Model\Email\SenderBuilder
-     */
-    protected function getSender()
-    {
-        return $this->senderBuilderFactory->create(
-            [
-                'template' => $this->template,
-                'identity' => $this->identity,
-            ]
-        );
-    }
-
-    /**
      * Retrieve template options
      *
-     * @return array
+     * @return mixed[]
      */
-    protected function getTemplateOptions()
+    private function getTemplateOptions()
     {
         return [
-            'area' => Area::AREA_FRONTEND,
+            'area' => 'frontend',
             'store' => $this->identity->getStore()->getId()
         ];
     }
@@ -175,9 +162,9 @@ class Sender
      * Retrieve template vars
      *
      * @param Review $review
-     * @return array
+     * @return mixed[]
      */
-    protected function getTemplateVars(Review $review)
+    private function getTemplateVars(Review $review)
     {
         return [
             'review' => $review,
@@ -192,7 +179,7 @@ class Sender
      *
      * @return \Magento\Catalog\Model\Product
      */
-    protected function getProduct()
+    private function getProduct()
     {
         $product = $this->coreRegistry->registry('current_product');
         $product->setHref($product->getUrlModel()->getUrl($product));
@@ -208,7 +195,7 @@ class Sender
      * @param Review $review
      * @return \Magento\Review\Model\ResourceModel\Rating\Option\Vote\Collection
      */
-    protected function getVoteCollection(Review $review)
+    private function getVoteCollection(Review $review)
     {
         $votes = $this->collectionFactory->create();
         $votes->setReviewFilter($review->getId())

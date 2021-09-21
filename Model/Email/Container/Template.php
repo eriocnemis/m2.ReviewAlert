@@ -13,14 +13,14 @@ class Template
     /**
      * Template variables
      *
-     * @var array
+     * @var mixed[]
      */
     protected $vars;
 
     /**
      * Template options
      *
-     * @var array
+     * @var mixed[]
      */
     protected $options;
 
@@ -34,7 +34,7 @@ class Template
     /**
      * Set email template variables
      *
-     * @param array $vars
+     * @param mixed[] $vars
      * @return void
      */
     public function setTemplateVars(array $vars)
@@ -45,7 +45,7 @@ class Template
     /**
      * Set email template options
      *
-     * @param array $options
+     * @param mixed[] $options
      * @return void
      */
     public function setTemplateOptions(array $options)
@@ -56,7 +56,7 @@ class Template
     /**
      * Retrieve email template variables
      *
-     * @return array
+     * @return mixed[]
      */
     public function getTemplateVars()
     {
@@ -66,7 +66,7 @@ class Template
     /**
      * Retrieve email template options
      *
-     * @return array
+     * @return mixed[]
      */
     public function getTemplateOptions()
     {
